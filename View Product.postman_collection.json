@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "30d4ff2a-d5ef-47a9-b9e1-10c0b8c1cdb3",
+		"name": "View Product",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9080/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "adeb32b1-90ac-4834-a6fd-ee36e8f61e3a",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Test Postman 1\");\r",
+							"});\r",
+							"\r",
+							"var data = JSON.parse(responseBody);   \r",
+							"for (var i = 0; i < data.length; i++)\r",
+							"    {\r",
+							"    var counter = data[i];\r",
+							"    postman.setEnvironmentVariable(\"productKy\", data[i].productKy);\r",
+							"    tests [\"Response should have the productName as Test Postman 1\"] = data[i].productName === \"Test Postman 1\"\r",
+							"    }\r",
+							"    \r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "password",
+						"username": "admin"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9080/products"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9080/products",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "password",
+						"username": "admin"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productName\":\"Test Postman 1\",\r\n  \"productDesc\":\"Test Postman 1\",\r\n  \"productPrice\": 400.00,\r\n  \"productStock\":10,\r\n  \"productCurrency\":\"INR\"\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9080/products"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
